@@ -4,17 +4,17 @@ body {
 	margin-right: 10%;
 }
 
-
 #display {
 	display: flex;
 	flex-wrap: wrap;
 }
 
-
-.card{
+.card {
 	margin-left: 1em;
 	margin-right: 1em;
 	margin-bottom: 1em;
+	width: 20em;
+	height: 30em;
 }
 
 .map { 

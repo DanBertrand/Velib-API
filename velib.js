@@ -13,7 +13,7 @@ class VelibStation {
 
         let section = document.createElement("DIV");
         section.innerHTML = `
-			<div class="card" style="width: 20rem;">
+			<div class="card">
 				<div class="card-body">
 					<h2 class="card-title">${this.name} </h2>
 					<ul>
