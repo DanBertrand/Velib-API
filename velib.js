@@ -12,37 +12,67 @@ class VelibStation{
 		this.docksAvalaible = docksAvalaible
 		this.geoLoc         = geoLoc;
 	};
+
+
+	show(){
+
+		let section       = document.createElement("DIV");
+		section.innerHTML = `
+			<div class="card" style="width: 20rem;">
+				<div class="card-body">
+					<h2 class="card-title">${this.name} </h2>
+					<ul>
+						<li>Normal bike : ${this.mechanicalBike}</li>
+						<li>Ebike : ${this.eBike}</li>
+						<li>Docks avalaible : ${this.docksAvalaible}</li>
+						<li>Total capacity : ${this.capacity}</li>
+					</ul>
+				</div>
+			</div>
+		`
+		document.getElementById("display").appendChild(section);
+	}
+};
+
+updateInfo = () => {
+	let object;
+	let array = [];
+
+	fetch(URL)
+	  .then((response) => response.json() )
+	  .then((item) =>  {
+
+	  		for( i = 0; i < 100; i++ ){
+	  			  		object = item.records[i].fields
+
+	  					let name           = object.name;
+	  					let mechanicalBike = object.mechanical;
+	  					let geoLoc 		   = object.coordonnees_geo;
+	  					let eBike          = object.ebike;
+	  					let docksAvalaible = object.numdocksavailable;
+	  					let capacity       = object.capacity;
+
+	  					array.push(new VelibStation(name, capacity, mechanicalBike, eBike, docksAvalaible, geoLoc));
+	  		}
+
+	  		let mainDiv = document.querySelector("#display");
+	  		
+	  		mainDiv.innerHTML = "";
+
+
+
+	  		array.forEach((station) => {
+	  			station.show()
+	  		});
+	  		
+	  });
+};
+
+start = () => {
+  updateInfo();
+  setInterval(function(){ updateInfo()}, 60000);
 };
 
 
-fetch(URL)
-  .then((response) => response.json() )
-  .then((item) =>  {
-
-  		for( i = 0; i < 1; i++ ){
-  			  		object = item.records[i].fields
-
-  					let name           = object.name;
-  					let mechanicalBike = object.mechanical;
-  					let geoLoc 		   = object.coordonnees_geo;
-  					let eBike          = object.ebike;
-  					let docksAvalaible = object.numdocksavailable;
-  					let capacity       = object.capacity;
-
-  					array.push(new VelibStation(name, capacity, mechanicalBike, eBike, docksAvalaible, geoLoc));
-  		}
-
-  		array.forEach((station) => {
-
-  		   let section = document.createElement("DIV");
-  		   section.style.backgroundColor = "red";
-  		   let string = `${station.name}`
-  		   let textstation = document.createTextNode(string);  
-  		   section.appendChild(textstation);  
-  		   document.getElementById("display").appendChild(section);
-  		})
-  		
-  });
-
-
+start();
 
